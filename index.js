@@ -18,18 +18,50 @@ const port = 5000
 
 const client = new MongoClient(uri, { useNewUrlParser: true, useUnifiedTopology: true });
 client.connect(err => {
-    const IslavoUsers = client.db("ISLAVO").collection("IslavoUser");
+    const islavoaudios = client.db("islavoaudio").collection("islavomusic");
 
-    app.post('/addusers', (req, res) => {
-        const users = req.body;
-        IslavoUsers.insertOne(users)
+    app.post('/islavomusics', (req, res) => {
+        const musics = req.body;
+        islavoaudios.insertOne(musics)
             .then(result => {
                 res.send(result)
             })
     })
 
-    app.get("/userdata", (req, res) => {
-        IslavoUsers.find({})
+    app.get("/allislavomusics", (req, res) => {
+        islavoaudios.find({})
+            .toArray((err, document) => {
+                res.send(document)
+            })
+    })
+    const islavoaudioss = client.db("islavoaudio").collection("islavopremium");
+
+    app.post('/islavopremiums', (req, res) => {
+        const premium = req.body;
+        islavoaudioss.insertOne(premium)
+            .then(result => {
+                res.send(result)
+            })
+    })
+
+    app.get("/allislavopremiums", (req, res) => {
+        islavoaudioss.find({})
+            .toArray((err, document) => {
+                res.send(document)
+            })
+    })
+    const islavoaudiosss = client.db("islavoaudio").collection("islavoshow");
+
+    app.post('/islavoshows', (req, res) => {
+        const show = req.body;
+        islavoaudiosss.insertOne(show)
+            .then(result => {
+                res.send(result)
+            })
+    })
+
+    app.get("/allislavoshows", (req, res) => {
+        islavoaudiosss.find({})
             .toArray((err, document) => {
                 res.send(document)
             })
