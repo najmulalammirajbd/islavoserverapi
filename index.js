@@ -3,14 +3,18 @@ const bodyParser = require('body-parser');
 const cors = require('cors');
 const MongoClient = require('mongodb').MongoClient;
 require('dotenv').config()
-
+const corsFonfig = {
+    origin: true,
+    credentials: true,
+    }
 
 const uri = `mongodb+srv://${process.env.DB_USER}:${process.env.DB_PASS}@cluster0.tfgke.mongodb.net/${process.env.DB_NAME}?retryWrites=true&w=majority`;
 
 const app = express()
 
 app.use(bodyParser.json());
-app.use(cors());
+app.use(cors(corsFonfig));
+app.options('*', cors(corsFonfig));
 
 const port = 5000
 
